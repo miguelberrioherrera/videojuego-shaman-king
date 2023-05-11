@@ -13,7 +13,7 @@ public class playermove : MonoBehaviour
 
     private bool canDoubleJump;
 
-    private float tiempocoyotetime = 0.5f;
+    private float tiempocoyotetime = 0.2f;
 
     Rigidbody2D rb2D;
 
@@ -72,9 +72,18 @@ public class playermove : MonoBehaviour
     //salto
     private void Update()
     {
-        if (Input.GetKey("space")  || Input.GetKey("w")  || Input.GetKey("up"))
+        /*if (IsGrounded())
         {
-            //doble salto
+            tiempocoyote = tiempocoyotetime;
+        }
+        else
+        {
+            tiempocoyote -= Time.deltaTime;
+        }*/
+
+        if (/*tiempocoyote > 0f &&*/Input.GetKey("space")  || Input.GetKey("w")  || Input.GetKey("up"))
+        {
+            //salto
             if (colaiderpatas.isGrounded)
             {
                 canDoubleJump = true;
@@ -82,7 +91,7 @@ public class playermove : MonoBehaviour
 
             }
 
-            //control salto
+            //salto doble
             else
             {             
                 if(Input.GetKeyDown("space") || Input.GetKeyDown("w") || Input.GetKeyDown("up"))
@@ -120,6 +129,7 @@ public class playermove : MonoBehaviour
         else if(rb2D.velocity.y > 0) 
         {
             animator.SetBool("caida", false);
+            /*tiempocoyote = 0f;*/
         }
     }
 
