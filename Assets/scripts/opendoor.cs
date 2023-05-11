@@ -23,16 +23,16 @@ public class opendoor : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-      text.gameObject.SetActive(false);
-      inDoor = false;
+        text.gameObject.SetActive(false);
+        inDoor = false;
     }
 
 
     private void Update()
     {
-        if(inDoor && Input.GetKey("e"))
+        if (inDoor && Input.GetKey("e"))
         {
-        SceneManager.LoadScene(levelName);
+            SceneManager.LoadScene(levelName);
         }
     }
 
