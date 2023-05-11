@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playermove : MonoBehaviour
 {
-
+    //velocidades
     public float runSpeed=2;
 
     public float jumpSpeed=3;
@@ -13,9 +13,11 @@ public class playermove : MonoBehaviour
 
     private bool canDoubleJump;
 
+    private float tiempocoyotetime = 0.5f;
+
     Rigidbody2D rb2D;
 
-
+    //tiempos
     public bool betterJump = false;
 
     public float fallMultiplier = 0.5f;
@@ -26,24 +28,63 @@ public class playermove : MonoBehaviour
 
     public Animator animator;
 
+    private bool coyotetime = false;
+        
+    private float tiempocoyote;
+
 
     void Start()
     {
      rb2D = GetComponent<Rigidbody2D>();   
     }
 
-    private void Update()
+    /*void checktocasuelo()
     {
-        if (Input.GetKey("space")  || Input.GetKey("w")  || Input.GetKey("up"))
+        //coyote time
+        if (colaiderpatas.isGrounded)
         {
-            if (colaiderpatas.isGrounded)
+            coyotetime = true;
+            tiempocoyote = 0f;
+        }
+        else
+        {
+            tiempocoyote += Time.deltaTime;
+        }
+
+        if (Input.GetKey("space") || Input.GetKey("w") || Input.GetKey("up"))
+        {
+            //control salto coyote time
+            if (colaiderpatas.isGrounded == true)
             {
-                canDoubleJump = true;
                 rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
             }
 
             else
             {
+                if (tiempocoyote < 0,25f)
+                {
+                    rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+                }
+            }
+        }  
+    }*/
+
+    //salto
+    private void Update()
+    {
+        if (Input.GetKey("space")  || Input.GetKey("w")  || Input.GetKey("up"))
+        {
+            //doble salto
+            if (colaiderpatas.isGrounded)
+            {
+                canDoubleJump = true;
+                rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
+
+            }
+
+            //control salto
+            else
+            {             
                 if(Input.GetKeyDown("space") || Input.GetKeyDown("w") || Input.GetKeyDown("up"))
                 {
                     if (canDoubleJump)
@@ -57,7 +98,7 @@ public class playermove : MonoBehaviour
         }
 
 
-
+        //animaciones salto
         if (colaiderpatas.isGrounded == false)
         {
             animator.SetBool("salto", true);
@@ -71,6 +112,7 @@ public class playermove : MonoBehaviour
             animator.SetBool("doble salto", false);
         }
 
+        //velocidad salto
         if (rb2D.velocity.y < 0)
         {
             animator.SetBool("caida", true);
@@ -81,7 +123,7 @@ public class playermove : MonoBehaviour
         }
     }
 
-
+    //control de movimiento
     void FixedUpdate()
     {
 
@@ -96,8 +138,7 @@ public class playermove : MonoBehaviour
         {
             rb2D.velocity = new Vector2 (-runSpeed, rb2D.velocity.y);
             spriteRenderer.flipX = true;
-            animator.SetBool("corre", true);
-            
+            animator.SetBool("corre", true);         
         }
 
         else {
@@ -105,7 +146,7 @@ public class playermove : MonoBehaviour
             animator.SetBool("corre", false);
         }
 
-       
+       //movimiento en el aire
         if (betterJump)
         {
             if (rb2D.velocity.y<0)
