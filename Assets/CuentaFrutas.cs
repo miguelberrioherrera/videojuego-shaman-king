@@ -10,9 +10,22 @@ public class CuentaFrutas : MonoBehaviour
 
     public GameObject trancision;
 
+    public Text total;
+
+    public Text fruitCollecter;
+
+    public int totalfrutasnivel;
+
+    private void Start()
+    {
+        totalfrutasnivel = transform.childCount;
+    }
+
     private void Update()
     {
         Allfruitcolecter();
+        total.text = totalfrutasnivel.ToString();
+        fruitCollecter.text = transform.childCount.ToString(); 
     }
 
    public void Allfruitcolecter(){
